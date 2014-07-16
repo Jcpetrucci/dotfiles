@@ -32,6 +32,8 @@ s (){
 		ip=$(dig +short ${possibleHostArray[$i]}.jcp )
 		upcheck="${colorsonred}DOWN${colorsoff}"
 		#timeout 1 nc -dz ${possibleHostArray[$i]}.jcp 22 >/dev/null 2>&1 && export upcheck="${colorsongreen}_UP_${colorsoff}"
+		#needs to hang if host is down and exit quickly if host is up:
+                #{ nc -w 3 -i 0.001 --recv-only ${possibleHostArray[$i]}.jcp 22 & } >/dev/null 2>&1
 		{ nc -dz ${possibleHostArray[$i]}.jcp 22 & } >/dev/null 2>&1
 		disown
 		kidpid=$!
