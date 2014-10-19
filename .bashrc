@@ -19,7 +19,7 @@ s (){
 	colorsonred=$(tput setaf 1)
 	colorsongreen=$(tput setaf 2)
 	colorsoff=$(tput sgr0)
-	possibleHostArray=($(awk '$2 == "A" {print $1}' $dnsFile | \
+	possibleHostArray=($(awk '$2 == "A" && $0 !~ ";hide$" {print $1}' $dnsFile | \
 		grep -vE "^;" | \
 		sort))
 
