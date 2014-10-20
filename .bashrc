@@ -6,9 +6,10 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Some DNS setup for alias 'dns'
-dnsptrgen=$(mktemp)
+export dnsptrgen=$(mktemp)
 cat <<'EOF' > $dnsptrgen && chmod +x $dnsptrgen
-awk '$2 == "A" && $1 !~ "^;" {printf "%s\t PTR\t %s\n", $3, $1;}' /var/named/jcp | sed -r 's/[0-9]+\.[0-9]+\.([0-9]+)\.([0-9]+)/\2.\1/' > /var/named/named.10.13
+awk '/TTL/,/main/' /var/named/jcp > /var/named/named.10.13
+awk '$2 == "A" && $1 !~ "^;" {printf "%s\t PTR\t %s.jcp\n", $3, $1;}' /var/named/jcp | sed -r 's/[0-9]+\.[0-9]+\.([0-9]+)\.([0-9]+)/\2.\1/' >> /var/named/named.10.13
 EOF
 
 # User specific aliases and functions
