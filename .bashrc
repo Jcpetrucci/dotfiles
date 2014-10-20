@@ -8,7 +8,6 @@ fi
 # User specific aliases and functions
 alias rm='rm -v'
 alias less='less -iS'
-alias ssh='ssh -ladmin'
 alias dns='sudo vi /var/named/jcp; sudo service named reload'
 alias p='~/phonetic.sh' # http://johncpetrucci.com/archive/phonetic.sh
 alias md5='cat <<EOF | grep -Ei "file|md5" | tr -d "\n" | sed -re "/File|MD5/{s/[ ]*File/Received file/g;s/[ ]*MD5(.*)/ \(MD5\1\)/g}"; echo '
@@ -47,9 +46,8 @@ s (){
 
 	sshHost=$REPLY
 	grep -Eq "[^0-9]" <<< "$REPLY" || sshHost=${possibleHostArray[$REPLY]}
-
-	printf '%s\n' "Now going to execute the command: ssh -l admin -o "VisualHostKey=yes" ${sshHost}.jcp"
-	ssh -l admin -o "VisualHostKey=yes" ${sshHost}.jcp
+	printf '%s ' "Now going to execute the command:" 
+	bash -xc "ssh -o 'VisualHostKey=yes' ${sshHost}.jcp"
 }
 
 export PS1='\u.$?\$ '
