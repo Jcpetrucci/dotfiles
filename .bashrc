@@ -5,10 +5,16 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# Some DNS setup for alias 'dns'
+dnsptrgen=$(mktemp)
+cat <<'EOF' > $dnsptrgen && chmod +x $dnsptrgen
+awk '$2 == "A" && $1 !~ "^;" {printf "%s\t PTR\t %s\n", $3, $1;}' /var/named/jcp | sed -r 's/[0-9]+\.[0-9]+\.([0-9]+)\.([0-9]+)/\2.\1/' > /var/named/named.10.13
+EOF
+
 # User specific aliases and functions
 alias rm='rm -v'
 alias less='less -iS'
-alias dns='sudo vi /var/named/jcp; sudo service named reload'
+alias dns='sudo vi /var/named/jcp; sudo $dnsptrgen; sudo service named reload'
 alias p='~/phonetic.sh' # http://johncpetrucci.com/archive/phonetic.sh
 alias md5='cat <<EOF | grep -Ei "file|md5" | tr -d "\n" | sed -re "/File|MD5/{s/[ ]*File/Received file/g;s/[ ]*MD5(.*)/ \(MD5\1\)/g}"; echo '
 alias rdp='ssh -fgN -L 3389:192.168.59.10:3389 admin@c1.jcp'
