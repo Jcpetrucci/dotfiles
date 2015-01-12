@@ -15,7 +15,7 @@ EOF
 # User specific aliases and functions
 alias rm='rm -v'
 alias less='less -iS'
-alias dns='sudo vi /var/named/jcp; sudo $dnsptrgen; sudo service named reload'
+alias dns='sudo vi /var/named/jcp; sudo bash -x "$dnsptrgen"; sudo service named reload'
 alias p='~/phonetic.sh' # http://johncpetrucci.com/archive/phonetic.sh
 alias md5='echo Use sha instead.'
 alias sha='cat <<EOF | grep -Ei "file|sha\-1" | tr -d "\n" | sed -re "/File|SHA\-1/{s/[ ]*File/Received file/g;s/[ ]*SHA-1(.*)/ \(SHA\-1\1\)/g}"; echo '
