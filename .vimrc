@@ -18,3 +18,7 @@ colorscheme koehler
 syntax on
 set nu
 " vim: set ft=vim :
+set smartindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
