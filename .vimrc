@@ -12,6 +12,7 @@ set guicursor=n-v-c:block,o:hor50,i-ci:hor15,r-cr:hor30,sm:block,a:blinkon0
 set helplang=en
 set history=50
 set hlsearch
+set ignorecase
 set ruler
 set viminfo='20,\"50
 colorscheme koehler
