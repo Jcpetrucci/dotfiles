@@ -15,6 +15,7 @@ EOF
 # User specific aliases and functions
 alias rm='rm -v'
 alias less='less -iS'
+alias t='tmux attach || tmux'
 alias dns='sudo vi /var/named/jcp; sudo bash -x "$dnsptrgen"; sudo service named reload'
 alias p='~/phonetic.sh' # http://johncpetrucci.com/archive/phonetic.sh
 alias md5='echo Use sha instead.'
