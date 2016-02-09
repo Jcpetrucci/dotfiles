@@ -14,6 +14,7 @@ EOF
 
 # User specific aliases and functions
 alias rm='rm -v'
+alias bc='bc -l'
 alias less='less -iS'
 alias t='tmux attach || tmux'
 alias dns='sudo vi /var/named/jcp; sudo bash -x "$dnsptrgen"; sudo service named reload'
