@@ -61,5 +61,10 @@ s (){
 	bash -xc "ssh -o 'VisualHostKey=yes' ${sshHost}.jcp"
 }
 
+# Share history across shell instances
+shopt -s histappend
+PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
+
+# Export variables
 export PS1='\u.$?\$ '
 export EDITOR='vi'
