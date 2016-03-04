@@ -14,6 +14,7 @@ EOF
 
 # User specific aliases and functions
 alias rm='rm -v'
+alias bc='bc -l'
 alias less='less -iS'
 alias t='tmux attach || tmux'
 alias dns='sudo vi /var/named/jcp; sudo bash -x "$dnsptrgen"; sudo service named reload'
@@ -21,6 +22,7 @@ alias p='~/phonetic.sh' # http://johncpetrucci.com/archive/phonetic.sh
 alias md5='echo Use sha instead.'
 alias sha='cat <<EOF | grep -Ei "file|sha\-1" | tr -d "\n" | sed -re "/File|SHA\-1/{s/[ ]*File/Received file/g;s/[ ]*SHA-1(.*)/ \(SHA\-1\1\)/g}"; echo '
 alias rdp='ssh -fgN -L 3389:192.168.59.10:3389 admin@c1.jcp'
+alias random='echo $(head -c 15 <(tr -d -c [:alnum:] </dev/urandom))'
 
 s (){
 	dnsFile=/var/named/jcp
@@ -59,5 +61,10 @@ s (){
 	bash -xc "ssh -o 'VisualHostKey=yes' ${sshHost}.jcp"
 }
 
+# Share history across shell instances
+shopt -s histappend
+PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
+
+# Export variables
 export PS1='\u.$?\$ '
 export EDITOR='vi'
