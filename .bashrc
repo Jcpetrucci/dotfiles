@@ -16,7 +16,6 @@ EOF
 alias rm='rm -v'
 alias bc='bc -l'
 alias less='less -iS'
-alias t='tmux attach || tmux'
 alias dns='sudo vi /var/named/jcp; sudo bash -x "$dnsptrgen"; sudo service named reload'
 alias p='~/phonetic.sh' # http://johncpetrucci.com/archive/phonetic.sh
 alias md5='echo Use sha instead.'
@@ -61,10 +60,17 @@ s (){
 	bash -xc "ssh -o 'VisualHostKey=yes' ${sshHost}.jcp"
 }
 
+t() {
+  # Configure a PuTTY profile to send "t" as the "Remote command".  This function will automatically reattach to an existing tmux session if one exists, or start a new one.  This function also repeatedly sends our homemade tmux clipboard back to the PuTTY client in the form of an ANSI printer escape sequence.  The contents of the homemade clipboard are populated by `bind -t vi-copy y copy-pipe 'cat > ~/.tmux-buffer'` in tmux.conf.  It is expected that the PuTTY client will be configured to print to a "Microsoft XPS Document Writer" which saves the printer output to a file.  The file is subsequently read by an AutoHotkey macro, and the contents are made available for paste.
+  [[ "$TERM" == "xterm" ]] || return 0 # This prevents recursive runs, in case t() is called after tmux is started.
+  { while :; do tput mc5; cat ~/.tmux-buffer; tput mc4; sleep 5; done } &
+  tmux attach || tmux
+}
+
+
 # Share history across shell instances
 shopt -s histappend
-PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
+HISTCONTROL=ignoredups:erasedups
+PROMPT_COMMAND='printf "\033k%s:%s\033\\" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
+PROMPT_COMMAND="history -a;history -c; history -r;$PROMPT_COMMAND"
 
-# Export variables
-export PS1='\u.$?\$ '
-export EDITOR='vi'
