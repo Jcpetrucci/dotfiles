@@ -71,6 +71,8 @@ t() {
 # Share history across shell instances
 shopt -s histappend
 HISTCONTROL=ignoredups:erasedups
+HISTTIMEFORMAT='%D %T %Z '
 PROMPT_COMMAND='printf "\033k%s:%s\033\\" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
 PROMPT_COMMAND="history -a;history -c; history -r;$PROMPT_COMMAND"
 
+alias decryptPassword='read -p "Encrypted password: "; echo -n "Decrypted password: "; echo $REPLY | openssl enc -d -base64 | openssl rsautl -decrypt -inkey rsa-priv.key;'
