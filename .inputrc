@@ -1,0 +1,7 @@
+set mark-modified-lines on
+set completion-ignore-case on
+set comment-begin # 
+set completion-prefix-display-length 2
+
+"\C-j": menu-complete
+"\C-k": menu-complete-backward
