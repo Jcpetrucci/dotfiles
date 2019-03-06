@@ -72,7 +72,27 @@ t() {
 shopt -s histappend
 HISTCONTROL=ignoredups:erasedups
 HISTTIMEFORMAT='%D %T %Z '
-PROMPT_COMMAND='printf "\033k%s:%s\033\\" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
-PROMPT_COMMAND="history -a;history -c; history -r;$PROMPT_COMMAND"
+HISTSIZE=99999
+
+unset PROMPT_COMMAND
+
+function prePrompt() {
+	if [ -z "$PROMPT_DISPLAYED" ]; then
+		return
+	fi
+	unset PROMPT_DISPLAYED
+
+	case "$BASH_COMMAND" in
+		"history -"?) return;; # do not set window title to the cmds in $PROMPT_COMMAND
+	esac
+
+	# window title terminal escape print current command:
+	printf '\033]0;%s\007' "${BASH_COMMAND:0:25}"
+}
+
+trap 'prePrompt' DEBUG
+
+PROMPT_COMMAND='history -a; history -c; history -r; PROMPT_DISPLAYED=1'
 
 alias decryptPassword='read -p "Encrypted password: "; echo -n "Decrypted password: "; echo $REPLY | openssl enc -d -base64 | openssl rsautl -decrypt -inkey rsa-priv.key;'
+umask 077
