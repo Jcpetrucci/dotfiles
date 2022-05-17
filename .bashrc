@@ -96,3 +96,13 @@ PROMPT_COMMAND='history -a; history -c; history -r; PROMPT_DISPLAYED=1'
 
 alias decryptPassword='read -p "Encrypted password: "; echo -n "Decrypted password: "; echo $REPLY | openssl enc -d -base64 | openssl rsautl -decrypt -inkey rsa-priv.key;'
 umask 077
+
+# WSL-specific:
+if grep -qE "(Microsoft|WSL)" /proc/version; then
+	alias clip='clip.exe'
+	alias tmux='TZ=UTC tmux'
+	export PS1="[\W]\$ "
+	export EDITOR=vi
+	cd /mnt/c/Users/john.petrucci/Desktop/
+fi
+
