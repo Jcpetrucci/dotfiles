@@ -15,7 +15,7 @@ set hlsearch
 set ignorecase
 set ruler
 set viminfo='20,\"50
-colorscheme koehler
+colorscheme darkblue
 syntax on
 set nu
 " vim: set ft=vim :
