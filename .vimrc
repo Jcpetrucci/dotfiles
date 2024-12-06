@@ -15,7 +15,13 @@ set hlsearch
 set ignorecase
 set ruler
 set viminfo='20,\"50
-colorscheme darkblue
+
+" color overrides for highlighting searches
+autocmd ColorScheme * hi CurSearch term=reverse cterm=reverse ctermfg=167 ctermbg=234 gui=reverse guifg=#d75f5f guibg=#1c1c1c
+autocmd ColorScheme * hi Search term=standout cterm=reverse ctermfg=186 ctermbg=234 gui=reverse guifg=#d7d787 guibg=#1c1c1c
+" colorscheme lunaperche
+colorscheme habamax
+
 syntax on
 set nu
 " vim: set ft=vim :
