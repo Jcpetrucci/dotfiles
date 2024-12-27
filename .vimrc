@@ -56,11 +56,12 @@ set statusline=
 set statusline+=%7*\[%n]                                  "buffernr
 set statusline+=%2*\ %y\                                  "FileType
 set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
-"set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
+set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
 set statusline+=%4*\ %{&ff}\                              "FileFormat (dos/unix..)
 set statusline+=%5*\ %{&spelllang}\ 											"Spellanguage & Highlight on?
 let &statusline .='%6*%{(&readonly || !&modifiable) ? " [RO] " : ""}'
 set statusline+=%1*\ %=\ %<%F\                            "File+path
-set statusline+=%4*\ line:%l/%L\ (%03p%%)\    		          "Rownumber/total (%)
+let &statusline .='%6*%{(&modified) ? "[*]" : ""}'
+set statusline+=%4*\ line:%l/%L\ (%03p%%)\    		        "Rownumber/total (%)
 set statusline+=%3*\ col:%03c\                            "Colnr
-set statusline+=%2*\ \ %m%w\ %P\ \                      "Modified? Readonly? Top/bot.
+set statusline+=%2*\ \ %w\ %P\ \                      		"Top/bot.
