@@ -18,6 +18,9 @@ set viminfo='20,\"50
 " color overrides for highlighting searches
 autocmd ColorScheme * hi CurSearch term=reverse cterm=reverse ctermfg=167 ctermbg=234 gui=reverse guifg=#d75f5f guibg=#1c1c1c
 autocmd ColorScheme * hi Search term=standout cterm=reverse ctermfg=186 ctermbg=234 gui=reverse guifg=#d7d787 guibg=#1c1c1c
+autocmd ColorScheme * hi DiffText ctermfg=232 cterm=bold ctermbg=173
+autocmd ColorScheme * hi DiffChange ctermbg=66 
+" color definitions for statusline
 autocmd ColorScheme * hi User1 ctermfg=0  ctermbg=75
 autocmd ColorScheme * hi User2 ctermfg=0  ctermbg=247
 autocmd ColorScheme * hi User3 ctermfg=0  ctermbg=245
@@ -65,3 +68,7 @@ let &statusline .='%6*%{(&modified) ? "[*]" : ""}'
 set statusline+=%4*\ line:%l/%L\ (%03p%%)\    		        "Rownumber/total (%)
 set statusline+=%3*\ col:%03c\                            "Colnr
 set statusline+=%2*\ \ %w\ %P\ \                      		"Top/bot.
+
+" show changes since last save
+command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
+                \ | diffthis | wincmd p | diffthis
