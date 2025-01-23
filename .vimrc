@@ -20,6 +20,7 @@ autocmd ColorScheme * hi CurSearch term=reverse cterm=reverse ctermfg=167 ctermb
 autocmd ColorScheme * hi Search term=standout cterm=reverse ctermfg=186 ctermbg=234 gui=reverse guifg=#d7d787 guibg=#1c1c1c
 autocmd ColorScheme * hi DiffText ctermfg=232 cterm=bold ctermbg=173
 autocmd ColorScheme * hi DiffChange ctermbg=66 
+autocmd ColorScheme * hi DiffDelete ctermfg=167
 " color definitions for statusline
 autocmd ColorScheme * hi User1 ctermfg=0  ctermbg=75
 autocmd ColorScheme * hi User2 ctermfg=0  ctermbg=247
@@ -52,7 +53,10 @@ set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
 
+" insert datestamp when `.d` is typed
 imap .d<CR>  <C-R>=strftime("%Y-%m-%d %I:%M %p %Z")<CR>
+" search for datestamps from command mode
+cmap .d<CR>  ?^....-..-.. ..:.. .. ...<CR>
 
 " statusline stuff
 set statusline=
