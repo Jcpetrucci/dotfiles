@@ -73,6 +73,9 @@ set statusline+=%4*\ line:%l/%L\ (%03p%%)\    		        "Rownumber/total (%)
 set statusline+=%3*\ col:%03c\                            "Colnr
 set statusline+=%2*\ \ %w\ %P\ \                      		"Top/bot.
 
+" highlight lines which start with '***' (my convention for to-do list)
+match User6 /\*\*\*.*$/
+
 " show changes since last save
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
                 \ | diffthis | wincmd p | diffthis
