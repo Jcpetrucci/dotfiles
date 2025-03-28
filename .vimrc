@@ -10,7 +10,7 @@ set backspace=indent,eol,start
 set fileencodings=ucs-bom,utf-8,latin1
 set guicursor=n-v-c:block,o:hor50,i-ci:hor15,r-cr:hor30,sm:block,a:blinkon0
 set helplang=en
-set history=50
+set history=500
 set hlsearch
 set ignorecase
 set ruler
@@ -21,6 +21,9 @@ autocmd ColorScheme * hi Search term=standout cterm=reverse ctermfg=186 ctermbg=
 autocmd ColorScheme * hi DiffText ctermfg=232 cterm=bold ctermbg=173
 autocmd ColorScheme * hi DiffChange ctermbg=66 
 autocmd ColorScheme * hi DiffDelete ctermfg=167
+" color overrides for other
+autocmd ColorScheme * hi! link Question Title
+autocmd ColorScheme * hi! link Ignore MatchParen
 " color definitions for statusline
 autocmd ColorScheme * hi User1 ctermfg=0  ctermbg=75
 autocmd ColorScheme * hi User2 ctermfg=0  ctermbg=247
@@ -32,7 +35,7 @@ autocmd ColorScheme * hi User7 ctermfg=254  ctermbg=0 gui=bold
 autocmd ColorScheme * hi User8 ctermfg=254  ctermbg=33
 autocmd ColorScheme * hi User9 ctermfg=0  ctermbg=250
 autocmd ColorScheme * hi User0 ctermfg=254  ctermbg=172
-" colorscheme lunaperche
+
 colorscheme habamax
 
 syntax on
@@ -76,6 +79,17 @@ set statusline+=%2*\ \ %w\ %P\ \                      		"Top/bot.
 " highlight lines which start with '***' (my convention for to-do list)
 match User6 /\*\*\*.*$/
 
+" highlight datestamp lines
+2match User9 /^....-..-.. ..:.. .. ....*$/
+
+
 " show changes since last save
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
                 \ | diffthis | wincmd p | diffthis
+
+" grep current file for todo lines
+command Todo w !grep -Eo '\*\*\*(.*)'
+
+" display non-print characters such as tab
+set list
+set listchars+=tab:\ \ Γöè
